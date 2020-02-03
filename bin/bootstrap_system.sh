@@ -215,6 +215,10 @@ if [[ "$UBUNTU" == true ]]; then
   fi
 fi
 
+# Ubuntu 16.04 installs libcurl-gnutls.so.4 only but kudu 1.12.x needs libcurl.so.4
+# run-time dependency.
+ubuntu16 apt-get --yes install libcurl4-openssl-dev
+
 # Ubuntu 18.04 installs OpenJDK 11 and configures it as the default Java version.
 # Impala is currently tested with OpenJDK 8, so configure that version as the default.
 ubuntu18 sudo update-java-alternatives -s java-1.8.0-openjdk-amd64
