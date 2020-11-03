@@ -1842,6 +1842,17 @@ def impala_shell_main():
   the impala-shell, but they do have defaults on the server. Query options can be also
   changed in impala-shell with the 'set' command.
   """
+  print('**** impala_shell_main() started ****')
+
+  import logging
+  root_logger = logging.getLogger()
+  root_logger.setLevel(logging.DEBUG)
+  root_logger.addHandler(logging.StreamHandler())
+
+  from six.moves import http_client
+  http_client.HTTPConnection.debuglevel = 1
+  http_client.HTTPSConnection.debuglevel = 1
+
   # pass defaults into option parser
   global options, parser
   parser = get_option_parser(impala_shell_defaults)
