@@ -396,15 +396,7 @@ class ImpalaClient(object):
       # Set the BASIC auth header
       user_passwd = "{0}:{1}".format(self.user, self.ldap_password)
       auth = base64.encodestring(user_passwd.encode()).decode().strip('\n')
-      basic_auth_header = "Basic {0}".format(auth)
-
-      def get_auth_headers(auth_cookie):
-        if auth_cookie:
-          cookie_value = auth_cookie.output(attrs=['value'], header='').strip()
-          return {'Cookie': cookie_value}
-        else:
-          return {"Authorization": basic_auth_header}
-      transport.setGetCustomHeadersFunc(get_auth_headers)
+      transport.setCustomHeaders({"Authorization": "Basic {0}".format(auth)})
 
     transport.open()
     return transport
